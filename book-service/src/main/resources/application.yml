@@ -1,0 +1,27 @@
+server:
+  port: 8100
+spring:
+  application:
+    name: book-service
+  datasource: # Configuracao do banco de dados
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/book_service?useTimezone=true&serverTimezone=UTC
+    username: root
+    password: 23031990
+  jackson: # Configuracao para serializacao dos beans
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false # Estavamos tendo erro com beans vazios
+    default-property-inclusion: non_null
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true # Nao utilizar em ambientes de producao, dev e etc, pois diminui a performance
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  flyway: # Responsavel por organizar os scripts que sao executados no banco de dados
+    url: jdbc:mysql://localhost:3306/
+    schemas: book_service
+    user: root
+    password: 23031990
+
