@@ -1,6 +1,7 @@
 package br.com.erudio.controller;
 
 import br.com.erudio.model.Book;
+import br.com.erudio.proxy.CambioProxy;
 import br.com.erudio.repository.BookRepository;
 import br.com.erudio.response.Cambio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,29 @@ public class BookController {
     private Environment environment; //Com environment conseguimos acessas informacoes do ambiente que estamos trabalhando
 
     @Autowired
-    BookRepository repository;
+    private BookRepository repository;
+
+    @Autowired
+    private CambioProxy proxy;
 
     @GetMapping(value = "{id}/{currency}")
+    public Book findBook(
+            @PathVariable(value = "id") Long id,
+            @PathVariable(value = "currency") String currency
+    ){
+        var book = repository.getById(id);
+        if(book == null) throw new RuntimeException("Book not found");
+
+        // Configuracao com o Open Feign
+        var cambio = proxy.getCambio(book.getPrice(), "USD", currency);
+
+        var port = environment.getProperty("local.server.port");
+        book.setEnvironment(port + " FEIGN");
+        book.setPrice(cambio.getConvertedValue());
+        return book;
+    }
+    // Método sem o Open Feign
+    /** @GetMapping(value = "{id}/{currency}")
     public Book findBook(
             @PathVariable(value = "id") Long id,
             @PathVariable(value = "currency") String currency
@@ -48,5 +69,5 @@ public class BookController {
         book.setEnvironment(port);
         book.setPrice(cambio.getConvertedValue());
         return book;
-    }
+    }*/
 }
