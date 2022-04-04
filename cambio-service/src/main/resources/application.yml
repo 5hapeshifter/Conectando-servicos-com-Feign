@@ -6,3 +6,17 @@ spring:
   datasource: # Configuracao do banco de dados
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/cambio_service?useTimezone=true&serverTimezone=UTC
+    username: root
+    password: 23031990
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true # Nao utilizar em ambientes de producao, dev e etc, pois diminui a performance
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  flyway: # Responsavel por organizar os scripts que sao executados no banco de dados
+    url: jdbc:mysql://localhost:3306/
+    schemas: cambio_service
+    user: root
+    password: 23031990
