@@ -1,0 +1,9 @@
+server:
+  port: 8761
+spring:
+  application:
+    name: naming-server
+eureka:
+  client:
+    register-with-eureka: false # Propriedade para que ele nao procure se autoregistrar em outras instancias do Eureka em execucao. Em producao, dev e etc, precisamos tirar isso e deixar ele automatico
+    fetch-registry: false
