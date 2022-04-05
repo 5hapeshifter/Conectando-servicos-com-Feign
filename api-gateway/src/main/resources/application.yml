@@ -1,0 +1,15 @@
+server:
+  port: 8765
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka # Configuracao opcional, do endereco da instancia do Eureka
+spring:
+  application:
+    name: api-gateway
+#  cloud:
+#    gateway:
+#      discovery:
+#        locator: # configuracao para o gatway captar os servicos
+#          enabled: true
+#          lower-case-service-id: true # configuracao para acessar o endereco das aplicacoes(via path http://localhost:8765/BOOK-SERVICE/book-service/14/BRL) com o nome da aplicao no Eureka em letras minusculas, Ex: book-service
