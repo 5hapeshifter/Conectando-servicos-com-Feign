@@ -9,6 +9,8 @@ resilience4j:
     instances:
       foo-bar:
         max-attempts: 5 # Configuracao para a quantidade de tentativas de envio da requisicao ser feita, podemos adiconar varios instancias do servico
+        wait-duartion: 1s # Configuracao para o intervalo entre as requisicoes
+        enable-exponential-backoff: true # Mais uma configuracao para o intervalo entre as requisicoes, com um intervalo progressivo
 spring:
   application:
     name: book-service

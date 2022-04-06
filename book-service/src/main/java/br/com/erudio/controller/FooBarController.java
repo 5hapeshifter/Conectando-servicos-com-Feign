@@ -14,7 +14,8 @@ public class FooBarController {
 
     private Logger logger = LoggerFactory.getLogger(FooBarController.class);
 
-    @Retry(name = "foo-bar") // Configuracao de tentativas de request que deve ser feita configurada no application.yml, tambem podemos implementar essa configuracao por endpoint
+    // fallbackMethod e o metodo que sera chamado para responder a situacao quando ocorrer um erro e esgotar a tentativa de retry
+    @Retry(name = "foo-bar", fallbackMethod = "fallbackMethod") // Configuracao de tentativas de request que deve ser feita configurada no application.yml, tambem podemos implementar essa configuracao por endpoint
     @GetMapping("/foo-bar")
     public String foobar(){
         logger.info("Request to foo-bar is received!");
@@ -22,6 +23,10 @@ public class FooBarController {
                 .getForEntity("http://localhost:8080/foo-bar", String.class); // endereco errado propositalmente para gerar erro
         //return "Foo-Bar!!";
         return response.getBody();
+    }
+
+    public String fallbackMethod(Exception ex) { // Metodo que sera executado e sera chamado pelo retry do metodo acima, foobar
+        return "fallbackMethod foo-bar!!!";
     }
 
 }
