@@ -44,4 +44,7 @@ spring:
     schemas: book_service
     user: root
     password: 23031990
-
+springdoc:
+  show-actuator: true
+  api-docs: # Configuracao para o Gateway conseguir captar o Swagger desse servico
+    path: book-service/v3/api-docs # Caminho do servico apos o load balancer(sem ter o 'book-service' replicado no path)

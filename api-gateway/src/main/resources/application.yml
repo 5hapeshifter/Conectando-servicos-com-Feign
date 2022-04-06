@@ -7,9 +7,24 @@ eureka:
 spring:
   application:
     name: api-gateway
-#  cloud:
-#    gateway:
-#      discovery:
-#        locator: # configuracao para o gatway captar os servicos
-#          enabled: true
-#          lower-case-service-id: true # configuracao para acessar o endereco das aplicacoes(via path http://localhost:8765/BOOK-SERVICE/book-service/14/BRL) com o nome da aplicao no Eureka em letras minusculas, Ex: book-service
+  cloud:
+    gateway:
+      discovery:
+        locator: # configuracao para o gatway captar os servicos
+          enabled: true
+          # lower-case-service-id: true # configuracao para acessar o endereco das aplicacoes(via path http://localhost:8765/BOOK-SERVICE/book-service/14/BRL) com o nome da aplicao no Eureka em letras minusculas, Ex: book-service
+      routes: # Configuracao das rotas que estavam no ApiGateway configuration, porque é mais difícil configurar pela classe.
+        - id: cambio-service
+          uri: lb://cambio-service # Rota apos o load balancing
+          predicates:
+            - Path=/cambio-service/** # Rota original
+        - id: book-service
+          uri: lb://book-service # Rota apos o load balancing
+          predicates:
+            - Path=/book-service/** # Rota originaloriginal
+        - id: openapi
+          uri: lb://api-gateway # Rota apos o load balancing
+          predicates:
+            - Path=/v3/api-docs/** # Rota original
+          filters:
+            - RewritePath=/v3/api-docs/(?<path>.*),/$\{path}/v3/api-docs/ # Estamos renomeando o path com regex
