@@ -5,9 +5,18 @@ eureka:
     service-url:
       default-zone: http://localhost:8761/eureka # Configuracao opcional, do endereco da instancia do Eureka
 resilience4j:
+  bulkhead:
+    instances:
+      default: # Nome do Endpoint no controller
+        max-concurrent-calls: 10 # Configuracao de quantidade de requisicoes concorrentes
+  ratelimiter:
+    instances:
+      default: # Nome do Endpoint no controller
+        limit-for-period: 2 # Quantidade de requisicoes que pode ser feita dentro de um determinado tempo
+        limit-refresh-period: 10s # Limite de tempo que comporta a quantidade de requisicoes especificadas, 2 a cada 10 seg nesse caso
   retry:
     instances:
-      foo-bar:
+      foo-bar: # Nome do Endpoint no controller
         max-attempts: 5 # Configuracao para a quantidade de tentativas de envio da requisicao ser feita, podemos adiconar varios instancias do servico
         wait-duartion: 1s # Configuracao para o intervalo entre as requisicoes
         enable-exponential-backoff: true # Mais uma configuracao para o intervalo entre as requisicoes, com um intervalo progressivo
