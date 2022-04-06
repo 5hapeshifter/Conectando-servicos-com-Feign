@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "Book endpoint") // Configuracao do Swagger
+@Tag(name = "Book Service endpoint") // Configuracao do Swagger
 @RestController
 @RequestMapping("book-service")
 public class BookController {
