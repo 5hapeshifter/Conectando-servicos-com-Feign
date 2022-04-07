@@ -22,4 +22,8 @@ Modulo do curso (Microservices do 0 com Spring Cloud, Spring Boot e Docker - Lea
 # Caminho padrão de acesso ao Eureka
 - http://localhost:8761
 
+# Configuração para buildar uma imagem da aplicação direto do Intellij
+- Utilizar o plugin registry ao invés do local repository em Modify options, e executar como Maven Project
+
+
 

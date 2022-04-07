@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  naming-server:
+    image: sussusallum/naming-server:0.0.1-SNAPSHOT
+    ports:
+      - 8761:8761
+    networks:
+      -  erudio-network # Rede definida em que os servicos devem se conectar
+networks:
+  erudio-network:
+    driver: bridge
