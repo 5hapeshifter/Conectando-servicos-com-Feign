@@ -23,7 +23,8 @@ Modulo do curso (Microservices do 0 com Spring Cloud, Spring Boot e Docker - Lea
 - http://localhost:8761
 
 # Configuração para buildar uma imagem da aplicação direto do Intellij
-- Utilizar o plugin registry ao invés do local repository em Modify options, e executar como Maven Project
+- Utilizar o plugin registry ao invés do local repository em Modify options, e executar como Maven Project; ou
+- Executar o comando  mvn spring-boot:build-image -DskipTests, na pasta do projeto (projeto api-gateway por exemplo)
 
 
 

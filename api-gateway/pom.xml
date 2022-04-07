@@ -76,6 +76,12 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration> <!-- Plugin para configurar a imagem no Docker hub -->
+                    <image>
+                        <name>sussusallum/${project.artifactId}:${project.version}</name> <!-- login no docker hub, nome do servico, versao do spring boot -->
+                    </image>
+                    <pullPolicy>IF_NOT_PRESENT</pullPolicy> <!-- Se a docker image já estiver na maquina, ela nao sera baixada, senao ele vai baixar -->
+                </configuration>
             </plugin>
         </plugins>
     </build>

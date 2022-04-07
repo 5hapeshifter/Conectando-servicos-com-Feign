@@ -1,18 +1,30 @@
 version: '3.4'
 
 services:
+  zipkin-server:
+    image: openzipkin/zipkin:2.23.2
+    ports:
+      - 9411:9411
+    networks:
+      - erudio-network # Rede definida em que os servicos devem se conectar
   naming-server:
     image: sussusallum/naming-server:0.0.1-SNAPSHOT
     ports:
       - 8761:8761
     networks:
       -  erudio-network # Rede definida em que os servicos devem se conectar
-  zipkin:
-    image: openzipkin/zipkin:2.23.2
+  api-gateway:
+    image: sussusallum/api-gateway:0.0.1-SNAPSHOT
     ports:
-      - 9411:9411
+      - 8765:8765
+    depends_on:
+      - naming-server
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEAULTZONE: http://naming-server:8761/eureka # Configuracao do Eureka passando o nome do servico, nesse caso naming-server
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/ # Configuracao para o api-gateway se conectar ao Zipkin, passando o nome do servico
     networks:
       - erudio-network # Rede definida em que os servicos devem se conectar
+
 networks:
   erudio-network:
     driver: bridge
