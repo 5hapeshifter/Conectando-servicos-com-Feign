@@ -7,6 +7,9 @@ eureka:
 spring:
   application:
     name: api-gateway
+  sleuth:
+    sampler:
+      probability: 1.0 # Configuracao do percentual que deve ser feito log pelo Sleuth, 1.0 equivale a 100%, o ideal em ambientes de producao e de 0.05, 5%
   cloud:
     gateway:
       discovery:

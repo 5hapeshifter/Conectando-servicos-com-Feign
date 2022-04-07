@@ -24,6 +24,11 @@ spring:
     schemas: cambio_service
     user: root
     password: 23031990
+  sleuth:
+    sampler:
+      probability: 1.0 # Configuracao do percentual que deve ser feito log pelo Sleuth, 1.0 equivale a 100%, o ideal em ambientes de producao e de 0.05, 5%
+  #zipkin:
+    #base-url: http://localhost:9411 # Por padrao, o zipkin ja tem a porta 9411 configurada, se quisermos alterar, temos que usar essa propriedade
 springdoc:
   show-actuator: true
   api-docs: # Configuracao para o Gateway conseguir captar o Swagger desse servico
