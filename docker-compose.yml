@@ -1,5 +1,5 @@
 version: '3.4'
-
+# A propriedades do docker-compose sobrescrevem as do application.yml
 services:
   zipkin-server:
     image: openzipkin/zipkin:2.23.2
@@ -71,12 +71,12 @@ services:
       TZ: America/Sao_Paulo
       EUREKA.CLIENT.SERVICEURL.DEAULTZONE: http://naming-server:8761/eureka # Configuracao do Eureka passando o nome do servico, nesse caso naming-server
       SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/ # Configuracao para o api-gateway se conectar ao Zipkin, passando o nome do servico
-      SPRING.DATASOURCE.URL: jdbc:mysql://localhost:3306/cambio_service?useTimezone=true&serverTimezone=UTC
+      SPRING.DATASOURCE.URL: jdbc:mysql://cambio-db:3308/cambio_service?useSSL=false&serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
       SPRING.DATASOURCE.USERNAME: root
-      SPRING.DATASOURCE.PASSWORD: 23031990
-      SPRING.FLYWAY.URL: jdbc:mysql://localhost:3306/cambio_service?useTimezone=true&serverTimezone=UTC
+      SPRING.DATASOURCE.PASSWORD: admin123
+      SPRING.FLYWAY.URL: jdbc:mysql://cambio-db:3308/cambio_service?useSSL=false&serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
       SPRING.FLYWAY.USER: root
-      SPRING.FLYWAY.PASSWORD: 23031990
+      SPRING.FLYWAY.PASSWORD: admin123
     ports:
       - 8000:8000
     depends_on: # Cambio-service precisa dos dois servicos abaixo para funcionar
