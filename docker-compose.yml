@@ -61,6 +61,28 @@ services:
     networks:
       - erudio-network # Rede definida em que os servicos devem se conectar
 
+  cambio-service: # Configuracao DB
+    image: sussusallum/cambio-service
+    restart: always # Se ocorrer uma falha, sera reiniciado
+    build:
+      context: .
+      dockerfile: cambio-service/Dockerfile
+    environment:
+      TZ: America/Sao_Paulo
+      EUREKA.CLIENT.SERVICEURL.DEAULTZONE: http://naming-server:8761/eureka # Configuracao do Eureka passando o nome do servico, nesse caso naming-server
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/ # Configuracao para o api-gateway se conectar ao Zipkin, passando o nome do servico
+      SPRING.DATASOURCE.URL: jdbc:mysql://localhost:3306/cambio_service?useTimezone=true&serverTimezone=UTC
+      SPRING.DATASOURCE.USERNAME: root
+      SPRING.DATASOURCE.PASSWORD: 23031990
+      SPRING.FLYWAY.URL: jdbc:mysql://localhost:3306/cambio_service?useTimezone=true&serverTimezone=UTC
+      SPRING.FLYWAY.USER: root
+      SPRING.FLYWAY.PASSWORD: 23031990
+    ports:
+      - 8000:8000
+    depends_on: # Cambio-service precisa dos dois servicos abaixo para funcionar
+      - naming-server
+      - cambio-db
+
 networks:
   erudio-network:
     driver: bridge

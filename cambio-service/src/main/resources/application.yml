@@ -18,10 +18,9 @@ spring:
     show-sql: true # Nao utilizar em ambientes de producao, dev e etc, pois diminui a performance
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        dialect: org.hibernate.dialect.MySQL57Dialect
   flyway: # Responsavel por organizar os scripts que sao executados no banco de dados
-    url: jdbc:mysql://localhost:3306/
-    schemas: cambio_service
+    url: jdbc:mysql://localhost:3306/cambio_service?useTimezone=true&serverTimezone=UTC
     user: root
     password: 23031990
   sleuth:
